@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Screener</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="eyebrow">Candidate Evaluation</div>
+        <h1>CV Screener</h1>
+        <p class="lede">Upload a CV and paste a job description. Get a structured match analysis in seconds.</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <p class="flash">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('main.analyze') }}" method="POST" enctype="multipart/form-data">
+            <label for="cv_file">Upload CV (PDF only)</label>
+            <input type="file" name="cv_file" id="cv_file" accept=".pdf" required>
+
+            <label for="job_description">Job Description</label>
+            <textarea name="job_description" id="job_description" rows="10" placeholder="Paste the job description here..." required></textarea>
+
+            <button type="submit">Analyze CV</button>
+        </form>
+    </div>
+</body>
+</html>
